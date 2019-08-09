@@ -1,137 +1,107 @@
 on('ready', function() {
-    'use strict';
+            'use strict';
 
 
-    // Set these values for template of choice and toggle the value of sendToPlayers if you want a fotter button to pass the message on to players
-    const template = 'npcaction';
-    const title = 'rname'
-    const theText = 'description'
-    const sendToPlayers = true;
+            // Set these values for template of choice and toggle the value of sendToPlayers if you want a fotter button to pass the message on to players
+            const template = 'npcaction';
+            const title = 'rname'
+            const theText = 'description'
+            const sendToPlayers = true;
 
-    const decodeUnicode = (str) => str.replace(/%u[0-9a-fA-F]{2,4}/g, (m) => String.fromCharCode(parseInt(m.slice(2), 16)));
+            const decodeUnicode = (str) => str.replace(/%u[0-9a-fA-F]{2,4}/g, (m) => String.fromCharCode(parseInt(m.slice(2), 16)));
 
-    let playerButton = ''
-    let messagePrefix = '/w gm ';
-    let option = '';
-    let message = '';
-    let whom = '';
-    let where = ''
+            let playerButton = ''
+            let messagePrefix = '/w gm ';
+            let option = '';
+            let message = '';
+            let whom = '';
+            let where = ''
 
-    on('chat:message', function(msg) {
-        if ('api' === msg.type && msg.content.match(/^!(gm|pc)note/) && playerIsGM(msg.playerid)) {
-            let match = msg.content.match(/^!gmnote-(.*)$/),
-                regex;
-
-
-            //define command                     
-            let command = msg.content.split(/\s+--/)[0];
+            on('chat:message', function(msg) {
+                    if ('api' === msg.type && msg.content.match(/^!(gm|pc)note/) && playerIsGM(msg.playerid)) {
+                        let match = msg.content.match(/^!gmnote-(.*)$/),
+                            regex;
 
 
-            if (command === '!pcnote') {
-                messagePrefix = '';
-            } else {
-                messagePrefix = '/w gm ';
-            }
-
-            //define option
-            let option = msg.content.split(/\s+--/)[1];
-            if ((option !== 'bio' && option !== 'charnote') || (option === undefined)) {
-                //|| (option === undefined
-                option = 'token';
-            }
+                        //define command                     
+                        let command = msg.content.split(/\s+--/)[0];
 
 
-            if (sendToPlayers && command === '!gmnote') {
-                playerButton = '\n[Send to Players](!pcnote --' + option + ')';
-            } else {
+                        if (command === '!pcnote') {
+                            messagePrefix = '';
+                        } else {
+                            messagePrefix = '/w gm ';
+                        }
 
-                playerButton = '';
-            }
-
-
-            if (match && match[1]) {
-                regex = new RegExp(`^${match[1]}`, 'i');
-            }
-
-            //Gets message from appropriate source
-            switch (option) {
-                case 'bio':
-                    //                          where='bio'
-                    _.chain(msg.selected)
-                        .map(s => getObj('graphic', s._id))
-                        .reject(_.isUndefined)
-                        .map(t => getObj('character', t.get('represents')))
-                        .reject(_.isUndefined)
-                        .each(c => c.get('bio', (val) => {
-                            if (null !== val && 'null' !== val && val.length > 0) {
-                                if (regex) {
-                                    message = _.filter(
-                                        decodeUnicode(val).split(/(?:[\n\r]+|<br\/?>)/),
-                                        (l) => regex.test(l.replace(/<[^>]*>/g, ''))
-                                    ).join('\r');
-                                } else {
-                                    message = decodeUnicode(val);
-                                }
-                                whom = c.get('name');
-                            }
-                        }));
+                        //define option
+                        let option = msg.content.split(/\s+--/)[1];
+                        if ((option !== 'bio' && option !== 'charnote') || (option === undefined)) {
+                            //|| (option === undefined
+                            option = 'token';
+                        }
 
 
-                    break;
+                        if (sendToPlayers && command === '!gmnote') {
+                            playerButton = '\n[Send to Players](!pcnote --' + option + ')';
+                        } else {
 
-                case 'charnote':
-                    //                                where='gmnotes'
-                    _.chain(msg.selected)
-                        .map(s => getObj('graphic', s._id))
-                        .reject(_.isUndefined)
-                        .map(t => getObj('character', t.get('represents')))
-                        .reject(_.isUndefined)
-                        .each(c => c.get('gmnotes', (val) => {
-                            if (null !== val && 'null' !== val && val.length > 0) {
-                                if (regex) {
-                                    message = _.filter(
-                                        decodeUnicode(val).split(/(?:[\n\r]+|<br\/?>)/),
-                                        (l) => regex.test(l.replace(/<[^>]*>/g, ''))
-                                    ).join('\r');
-                                } else {
-                                    message = decodeUnicode(val);
-                                }
-                                whom = c.get('name');
-                            }
-                        }));
+                            playerButton = '';
+                        }
 
 
-                    break;
+                        if (match && match[1]) {
+                            regex = new RegExp(`^${match[1]}`, 'i');
+                        }
 
-                default:
-                    _.chain(msg.selected)
-                        .map(s => getObj('graphic', s._id))
-                        .reject(_.isUndefined)
-                        .reject((o) => o.get('gmnotes').length === 0)
-                        .each(o => {
-                            if (regex) {
-                                message = _.filter(decodeURIComponent(decodeUnicode(o.get('gmnotes'))).split(/(?:[\n\r]+|<br\/?>)/), (l) => regex.test(l)).join('\r');
+                        if ((option === 'bio')||(option === 'charnote')) {
+                            log("This has bio or charnote");
+                            option = (option === 'charnote') ? 'gmnotes' : 'bio';
+
+                                _.chain(msg.selected)
+                                    .map(s => getObj('graphic', s._id))
+                                    .reject(_.isUndefined)
+                                    .map(t => getObj('character', t.get('represents')))
+                                    .reject(_.isUndefined)
+                                    .each(c => c.get(option, (val) => {
+                                        if (null !== val && 'null' !== val && val.length > 0) {
+                                            if (regex) {
+                                                message = _.filter(
+                                                    decodeUnicode(val).split(/(?:[\n\r]+|<br\/?>)/),
+                                                    (l) => regex.test(l.replace(/<[^>]*>/g, ''))
+                                                ).join('\r');
+                                            } else {
+                                                message = decodeUnicode(val);
+                                            }
+                                            whom = c.get('name');
+                                            log(whom);
+                                        }
+                                    }));
                             } else {
-                                message = decodeURIComponent(decodeUnicode(o.get('gmnotes')));
+                                _.chain(msg.selected)
+                                    .map(s => getObj('graphic', s._id))
+                                    .reject(_.isUndefined)
+                                    .reject((o) => o.get('gmnotes').length === 0)
+                                    .each(o => {
+                                        if (regex) {
+                                            message = _.filter(decodeURIComponent(decodeUnicode(o.get('gmnotes'))).split(/(?:[\n\r]+|<br\/?>)/), (l) => regex.test(l)).join('\r');
+                                        } else {
+                                            message = decodeURIComponent(decodeUnicode(o.get('gmnotes')));
+                                        }
+                                        whom = o.get('name');
+
+                                    });
+
                             }
-                            whom = o.get('name');
-
-                        });
-                    break;
-            }
-
-            //Sends the final message
-            sendChat(whom, messagePrefix + '&{template:' + template + '}{{' + title + '=' + whom + '}} {{' + theText + '=' + message + playerButton + '}}');
 
 
 
-            log('### REPORT###');
-            log('THE MESSAGE =' + message);
-            log('command = ' + command);
-            log('option = ' + option);
-            log('messagePrefix = ' + messagePrefix);
-            log('message =' + message)
+                            //Sends the final message
+                            sendChat(whom, messagePrefix + '&{template:' + template + '}{{' + title + '=' + whom + '}} {{' + theText + '=' + message + playerButton + '}}');
 
-        }
-    });
-});
+
+
+                            log('### REPORT###'); log('THE MESSAGE =' + message); log('command = ' + command); log('option = ' + option); log('messagePrefix = ' + messagePrefix); log('message =' + message)
+
+                        }
+                    });
+            });

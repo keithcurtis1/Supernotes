@@ -11,11 +11,8 @@ This script as written is optimized for the D&D 5th Edition by Roll20 sheet, but
 
 
 **Paramaters**
-
 *--token* Pulls notes from the selected token's gm notes field. This is optional. If it is missing, the script assumes --token
-
 *--charnote* Pulls notes from the gm notes field of the character assigned to a token.
-
 *--bio* Pulls notes from the bio field of the character assigned to a token.
 
 
@@ -83,7 +80,5 @@ const theText = 'notes_show=[[1]]}} {{notes'
 **Starfinder**
 
 const template = 'sf_generic';
-
 const title = 'title'
-
 const theText = 'buttons0'

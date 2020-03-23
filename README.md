@@ -1,4 +1,4 @@
-This was about 15% written by me, adapted from code written by the Aaron.
+This was about 15% written by keithcurtis, adapted from code written by the Aaron.
 
 This script pulls the contents from a token's GM Notes field. If the token represents a character, you can optionally pull in the Bio or GM notes from the character. The user can decide whether to whisper the notes to the GM or broadcast them to all players. Finally, there is the option to add a footer to notes whispered to the GM. This footer creates a chat button to give the option of sending the notes on to the players.
 This script as written is optimized for the D&D 5th Edition by Roll20 sheet, but can be adapted easily suing the Configuration section below.

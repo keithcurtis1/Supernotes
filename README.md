@@ -80,5 +80,7 @@ const theText = 'notes_show=[[1]]}} {{notes'
 **Starfinder**
 
 const template = 'sf_generic';
+
 const title = 'title'
+
 const theText = 'buttons0'

@@ -42,14 +42,14 @@ on('ready', () => {
             let message = '';
             let whom = '';
             if ((option === 'bio')||(option === 'charnote')) {
-                option = (option === 'charnote') ? 'gmnotes' : 'bio';
+                let suboption = (option === 'charnote') ? 'gmnotes' : 'bio';
 
                 _.chain(msg.selected)
                 .map(s => getObj('graphic', s._id))
                 .reject(_.isUndefined)
                 .map(t => getObj('character', t.get('represents')))
                 .reject(_.isUndefined)
-                .each(c => c.get(option, (val) => {
+                .each(c => c.get(suboption, (val) => {
                     if (null !== val && 'null' !== val && val.length > 0) {
                         if (regex) {
                             message = _.filter(

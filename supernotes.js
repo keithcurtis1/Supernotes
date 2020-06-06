@@ -7,6 +7,10 @@ on('ready', () => {
 
     const decodeUnicode = (str) => str.replace(/%u[0-9a-fA-F]{2,4}/g, (m) => String.fromCharCode(parseInt(m.slice(2), 16)));
 
+
+    const version = '0.0.2';
+    log('Supernotes v' + version + ' is ready!  Please set lines 3-5 to work with the roll templates your sheet of choice');
+
     on('chat:message', function(msg) {
         if ('api' === msg.type && msg.content.match(/^!(gm|pc)note/) && playerIsGM(msg.playerid)) {
             let match = msg.content.match(/^!gmnote-(.*)$/);

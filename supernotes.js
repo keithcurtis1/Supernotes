@@ -22,9 +22,9 @@ on('ready', () => {
 
             //define option
             let option = msg.content.split(/\s+--/)[1];
-            if ((option !== 'bio' && option !== 'charnote') || (option === undefined)) {
+            if ((option !== 'bio' && option !== 'charnote' && option !== 'avatar') || (option === undefined)) {
                 //|| (option === undefined
-                    option = 'token';
+                option = 'token';
             }
 
 
@@ -41,59 +41,75 @@ on('ready', () => {
 
             let message = '';
             let whom = '';
-            if ((option === 'bio')||(option === 'charnote')) {
-                let suboption = (option === 'charnote') ? 'gmnotes' : 'bio';
 
+            if (option === 'avatar') {
                 (msg.selected || [])
-                    .map(o=>getObj('graphic',o._id))
-                    .filter(g=>undefined !== g)
+                .map(o => getObj('graphic', o._id))
+                    .filter(g => undefined !== g)
                     .map(t => getObj('character', t.get('represents')))
-                    .filter(c=>undefined !== c)
-                    .forEach(c => c.get(suboption, (val) => {
-                        if (null !== val && 'null' !== val && val.length > 0) {
-                            if (regex) {
-                                message = _.filter(
-                                    decodeUnicode(val).split(/(?:[\n\r]+|<br\/?>)/),
-                                    (l) => regex.test(l.replace(/<[^>]*>/g, ''))
-                                ).join('\r');
-                            } else {
-                                message = decodeUnicode(val);
-                            }
-                            whom = c.get('name');
-                            //Sends the final message
-                            sendChat(whom, messagePrefix + '&{template:' + template + '}{{' + title + '=' + whom + '}} {{' + theText + '=' + message + playerButton + '}}');
-
-                        }
-                    }));
-            } else {
-                (msg.selected || [])
-                    .map(o=>getObj('graphic',o._id))
-                    .filter(g=>undefined !== g)
-                    .filter((o) => o.get('gmnotes').length > 0)
-                    .forEach(o => {
-                        if (regex) {
-                            message = _.filter(decodeURIComponent(decodeUnicode(o.get('gmnotes'))).split(/(?:[\n\r]+|<br\/?>)/), (l) => regex.test(l)).join('\r');
-                        } else {
-                            message = decodeURIComponent(decodeUnicode(o.get('gmnotes')));
-                        }
-                        whom = o.get('name');
-
+                    .filter(c => undefined !== c)
+                    .forEach(c => {
+                        message = "<img src='" + c.get('avatar') + "'>";
+                        log('avatar = ' + c.get('avatar'));
+                        whom = c.get('name');
+                        sendChat(whom, messagePrefix + '&{template:' + template + '}{{' + title + '=' + whom + '}} {{' + theText + '=' + message + playerButton + '}}');
                     });
-                //Sends the final message
-                sendChat(whom, messagePrefix + '&{template:' + template + '}{{' + title + '=' + whom + '}} {{' + theText + '=' + message + playerButton + '}}');
+            } else {
 
+
+                if ((option === 'bio') || (option === 'charnote')) {
+                    let suboption = (option === 'charnote') ? 'gmnotes' : 'bio';
+
+                    (msg.selected || [])
+                    .map(o => getObj('graphic', o._id))
+                        .filter(g => undefined !== g)
+                        .map(t => getObj('character', t.get('represents')))
+                        .filter(c => undefined !== c)
+                        .forEach(c => c.get(suboption, (val) => {
+                            if (null !== val && 'null' !== val && val.length > 0) {
+                                if (regex) {
+                                    message = _.filter(
+                                        decodeUnicode(val).split(/(?:[\n\r]+|<br\/?>)/),
+                                        (l) => regex.test(l.replace(/<[^>]*>/g, ''))
+                                    ).join('\r');
+                                } else {
+                                    message = decodeUnicode(val);
+                                }
+                                whom = c.get('name');
+                                //Sends the final message
+                                sendChat(whom, messagePrefix + '&{template:' + template + '}{{' + title + '=' + whom + '}} {{' + theText + '=' + message + playerButton + '}}');
+
+                            }
+                        }));
+                } else {
+                    (msg.selected || [])
+                    .map(o => getObj('graphic', o._id))
+                        .filter(g => undefined !== g)
+                        .filter((o) => o.get('gmnotes').length > 0)
+                        .forEach(o => {
+                            if (regex) {
+                                message = _.filter(decodeURIComponent(decodeUnicode(o.get('gmnotes'))).split(/(?:[\n\r]+|<br\/?>)/), (l) => regex.test(l)).join('\r');
+                            } else {
+                                message = decodeURIComponent(decodeUnicode(o.get('gmnotes')));
+                            }
+                            whom = o.get('name');
+
+                        });
+                    //Sends the final message
+                    sendChat(whom, messagePrefix + '&{template:' + template + '}{{' + title + '=' + whom + '}} {{' + theText + '=' + message + playerButton + '}}');
+
+                }
+
+
+                [
+                    `### REPORT###`,
+                    `THE MESSAGE =${message}`,
+                    `command = ${command}`,
+                    `option = ${option}`,
+                    `messagePrefix = ${messagePrefix}`,
+                    `message =${message}`
+                ].forEach(m => log(m));
             }
-
-
-            [
-                `### REPORT###`,
-                `THE MESSAGE =${message}`,
-                `command = ${command}`,
-                `option = ${option}`,
-                `messagePrefix = ${messagePrefix}`,
-                `message =${message}`
-            ].forEach(m=>log(m));
-
         }
     });
 });

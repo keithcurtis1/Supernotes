@@ -20,6 +20,8 @@ This script as written is optimized for the D&D 5th Edition by Roll20 sheet, but
 
 *--bio* Pulls notes from the bio field of the character assigned to a token.
 
+*--avatar* Pulls the image from the avatar field of the character assigned to a token.
+
 
 
 **Configuration**

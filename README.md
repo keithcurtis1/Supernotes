@@ -22,6 +22,8 @@ This script as written is optimized for the D&D 5th Edition by Roll20 sheet, but
 
 *--avatar* Pulls the image from the avatar field of the character assigned to a token.
 
+*--image* Pulls first image from the bio field of the character assigned to a token, if any exists. Otherwise returns notice that no artwork is available
+
 
 
 **Configuration**

@@ -8,7 +8,7 @@ on('ready', () => {
     const decodeUnicode = (str) => str.replace(/%u[0-9a-fA-F]{2,4}/g, (m) => String.fromCharCode(parseInt(m.slice(2), 16)));
 
 
-    const version = '0.0.3';
+    const version = '0.0.2';
     log('Supernotes v' + version + ' is ready!  Please set lines 3-5 to work with the roll templates your sheet of choice');
 
     on('chat:message', function(msg) {
@@ -79,9 +79,13 @@ on('ready', () => {
                                     message = decodeUnicode(val);
                                 }
                                 artwork = message.match(/\<img src.*?\>/g)
+
                                 if (artwork) {
                                     message = artwork;
+                                } else {
+                                    message = 'No artwork exists for this character.';
                                 }
+
                                 whom = c.get('name');
                                 //Sends the final message
                                 sendChat(whom, messagePrefix + '&{template:' + template + '}{{' + title + '=' + whom + '}} {{' + theText + '=' + message + playerButton + '}}');

@@ -1,4 +1,4 @@
-This was about 15% written by keithcurtis, adapted from code written by the Aaron.
+This was about 25% written by keithcurtis, adapted from code written by the Aaron.
 
 This script pulls the contents from a token's GM Notes field. If the token represents a character, you can optionally pull in the Bio or GM notes from the character. The user can decide whether to whisper the notes to the GM or broadcast them to all players. Finally, there is the option to add a footer to notes whispered to the GM. This footer creates a chat button to give the option of sending the notes on to the players.
 
@@ -24,11 +24,14 @@ This script as written is optimized for the D&D 5th Edition by Roll20 sheet, but
 
 *--image* Pulls first image from the bio field of the character assigned to a token, if any exists. Otherwise returns notice that no artwork is available
 
+*--help* Displays help.
+
+*--config* Returns a configuration dialog box that allows you to set which sheet's roll template to use, and to toggle the "Send to Players" footer.
 
 
 **Configuration**
 
-The script has a number of options at the beginning that you can use to customize to your chosen sheet. As written, it is configured for the D&D 5th Edition by Roll20 sheet. The first three are the names of fields used by the roll template of your choice. the last is true or false, used to toggle whether you want the "send to players" footer button to appear.
+When first installed, Supernotes is configured for the default roll template. It will display a config dialog box at startup that will allow you to choose a roll template based on your character sheet of choice, as well as the option  to toggle whether you want the "Send to Players" footer button to appear.
 
 template = name of roll template, default is 'npcaction'
 
@@ -39,57 +42,6 @@ const theText = name of text field used by roll template, default is 'descriptio
 const sendToPlayers = whether to use the "send to players" footer button, default is true
 
 
-**Alternate configurations:**
+You will need to edit the code of the script to create a custom configuration. The pre-installed sheets are:
 
-**Default Template**
-
-const template = 'default';
-
-const title = 'name'
-
-const theText = ' '
-
-
-**5e Shaped**
-
-const template = '5e-shaped';
-
-const title = 'title'
-
-const theText = 'text_big'
-
-
-**Pathfinder Community**
-
-const template = 'pf_generic';
-
-const title = 'name'
-
-const theText = 'description'
-
-
-**Pathfinder Official**
-
-const template = 'npc';
-
-const title = 'name'
-
-const theText = 'descflag=1}} {{desc'
-
-
-**Pathfinder 2e**
-
-const template = 'rolls';
-
-const title = 'header'
-
-const theText = 'notes_show=[[1]]}} {{notes'
-
-
-**Starfinder**
-
-const template = 'sf_generic';
-
-const title = 'title'
-
-const theText = 'buttons0'
+Default Template, D&D 5th Edition by Roll20, 5e Shaped, Pathfinder by Roll20 ,Pathfinder Community ,Pathfinder 2e by Roll20 ,Starfinder

@@ -33,15 +33,7 @@ This script as written is optimized for the D&D 5th Edition by Roll20 sheet, but
 
 When first installed, Supernotes is configured for the default roll template. It will display a config dialog box at startup that will allow you to choose a roll template based on your character sheet of choice, as well as the option  to toggle whether you want the "Send to Players" footer button to appear.
 
-template = name of roll template, default is 'npcaction'
 
-const title = name of title or name field used by roll template, default is 'rname'
-
-const theText = name of text field used by roll template, default is 'description'
-
-const sendToPlayers = whether to use the "send to players" footer button, default is true
-
-
-You will need to edit the code of the script to create a custom configuration. The pre-installed sheets are:
+You will need to edit the code of the script if you wish to create a custom configuration. The pre-installed sheets are:
 
 Default Template, D&D 5th Edition by Roll20, 5e Shaped, Pathfinder by Roll20 ,Pathfinder Community ,Pathfinder 2e by Roll20 ,Starfinder

@@ -1,7 +1,7 @@
 # Supernotes
-This was about 25% written by keithcurtis, adapted from code written by the Aaron.
+*This was about 25% written by keithcurtis, adapted from code written by the Aaron.*
 
-This script pulls the contents from a token's GM Notes field. If the token represents a character, you can optionally pull in the Bio or GM notes from the character. The user can decide whether to whisper the notes to the GM or broadcast them to all players. Finally, there is the option to add a footer to notes whispered to the GM. This footer creates a chat button to give the option of sending the notes on to the players.
+This script pulls the contents from a token's GM Notes field and sends them to chat, based on a user-selectable roll template. If the token represents a character, you can optionally pull in the Bio or GM notes from the character. The user can decide whether to whisper the notes to the GM or broadcast them to all players. Finally, there is the option to add a footer to notes whispered to the GM. This footer creates a chat button to give the option of sending the notes on to the players.
 
 This script as written is optimized for the D&D 5th Edition by Roll20 sheet, but can be adapted easily suing the Configuration section below.
 
@@ -34,7 +34,6 @@ This script as written is optimized for the D&D 5th Edition by Roll20 sheet, but
 
 When first installed, Supernotes is configured for the default roll template. It will display a config dialog box at startup that will allow you to choose a roll template based on your character sheet of choice, as well as the option  to toggle whether you want the 'Send to Players' footer button to appear.
 
+You will need to edit the code of the script if you wish to create a custom configuration, or contact keithcurtis on the Roll20 forum and request an addition. The pre-installed sheets are:
 
-You will need to edit the code of the script if you wish to create a custom configuration. The pre-installed sheets are:
-
-Default Template, D&D 5th Edition by Roll20, 5e Shaped, Pathfinder by Roll20 ,Pathfinder Community ,Pathfinder 2e by Roll20 ,Starfinder
+Default Template, D&D 5th Edition by Roll20, 5e Shaped, Pathfinder by Roll20, Pathfinder Community, Pathfinder 2e by Roll20, Starfinder

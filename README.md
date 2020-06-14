@@ -1,3 +1,4 @@
+# Supernotes
 This was about 25% written by keithcurtis, adapted from code written by the Aaron.
 
 This script pulls the contents from a token's GM Notes field. If the token represents a character, you can optionally pull in the Bio or GM notes from the character. The user can decide whether to whisper the notes to the GM or broadcast them to all players. Finally, there is the option to add a footer to notes whispered to the GM. This footer creates a chat button to give the option of sending the notes on to the players.
@@ -5,14 +6,14 @@ This script pulls the contents from a token's GM Notes field. If the token repre
 This script as written is optimized for the D&D 5th Edition by Roll20 sheet, but can be adapted easily suing the Configuration section below.
 
 
-**Commands:**
+## Commands:
 
 **!gmnote** whispers the note to the GM
 
 **!pcnote** sends the note to all players
 
 
-**Paramaters**
+## Paramaters
 
 *--token* Pulls notes from the selected token's gm notes field. This is optional. If it is missing, the script assumes --token
 
@@ -26,12 +27,12 @@ This script as written is optimized for the D&D 5th Edition by Roll20 sheet, but
 
 *--help* Displays help.
 
-*--config* Returns a configuration dialog box that allows you to set which sheet's roll template to use, and to toggle the "Send to Players" footer.
+*--config* Returns a configuration dialog box that allows you to set which sheet's roll template to use, and to toggle the 'Send to Players' footer.
 
 
-**Configuration**
+## Configuration
 
-When first installed, Supernotes is configured for the default roll template. It will display a config dialog box at startup that will allow you to choose a roll template based on your character sheet of choice, as well as the option  to toggle whether you want the "Send to Players" footer button to appear.
+When first installed, Supernotes is configured for the default roll template. It will display a config dialog box at startup that will allow you to choose a roll template based on your character sheet of choice, as well as the option  to toggle whether you want the 'Send to Players' footer button to appear.
 
 
 You will need to edit the code of the script if you wish to create a custom configuration. The pre-installed sheets are:
